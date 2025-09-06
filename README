@@ -1,107 +1,116 @@
 Vishakha Roy — Portfolio (React + Tailwind)
 
-A modern, animated developer portfolio built with React, Tailwind CSS, and a touch of Three.js (via @react-three/fiber + @react-three/drei).
-It includes smooth reveal animations, a starfield theme, a Project Details modal with a mobile-friendly layout, and a 3D desk scene in the contact section.
+A modern, animated developer portfolio built with React, Tailwind CSS, and a touch of Three.js (@react-three/fiber + @react-three/drei).
+Includes smooth reveal animations, a starfield theme, a Project Details modal with carousel, and a 3D desk scene in the contact section.
 
-✨ Features
+Problem Statement
 
-Clean dark theme with starfield background and glassy cards
+Developers need a single place to showcase skills, projects, and achievements—clearly and beautifully—while keeping the site fast, responsive, and easy to maintain.
 
-Responsive layout (desktop → tablet → mobile)
+Feasible Solution
 
-Hero with rotating skill headline and avatar tilt effect
+Create a responsive portfolio web app that:
 
-Marquee skills strip (same background as the intro to avoid visible gaps)
+Highlights skills, experience, education, hackathons, certifications.
 
-Skills / Experience / Education / Hackathons / Courses sections with subtle 3D & reveal effects
+Presents projects in a grid with a detailed Project Details modal (carousel, live demo & code links).
 
-Projects grid with click-to-open Project Details modal
+Uses subtle motion (reveal, flip, slide-in) to guide attention without hurting performance.
 
-Carousel with arrows + dots
+Incorporates a 3D desk scene to add personality while keeping the UI accessible.
 
-Mobile top Close (X) always visible
+Features
 
-Sticky bottom CTA (“View Code”, “View Live”) always reachable on mobile
+🖤 Dark theme with starfield background & glass cards
 
-Contact section with a 3D desk scene
+📱 Responsive layout (desktop → tablet → mobile)
 
-Scene height matches the contact form
+🧠 Hero with rotating skill headline + avatar tilt effect
 
-Rounded corners and background color tuned to the layout
+🏷 Marquee skills strip (same background as hero; no visual gaps)
 
-Accessibility touches (focus states, aria labels, keyboard Esc to close modal)
+🧩 Sections: Skills, Experience, Education, Projects, Hackathons, Certifications
 
-Easy to extend project data (projectsData) and section content
+🗂 Projects Grid → click to open Project Details modal
 
-🧰 Tech Stack
+🖼 Carousel with arrows + dots (auto-slide)
 
-React (Hooks, functional components)
+❌ Mobile top Close (X) always visible in modal
 
-Tailwind CSS (utility-first styling)
+📌 Sticky bottom CTA (“View Code”, “View Live”) on mobile
 
-Lucide React (icons)
+📨 Contact with a 3D desk scene (height matches form)
 
-@react-three/fiber & @react-three/drei (3D canvas)
+♿ Accessibility: focus states, aria labels, Esc to close modal
 
-Vite (recommended dev server & bundler)
+🛠 Config-driven data: update projectsData and section lists easily
 
-You can use CRA as well, but Vite provides a faster dev experience.
+Tech Stack
 
-📁 Project Structure (suggested)
-.
+Frontend: React (Hooks, functional components)
+
+Styling: Tailwind CSS (utility-first) + custom CSS tokens
+
+Icons: lucide-react
+
+3D: @react-three/fiber, @react-three/drei
+
+Bundler/Dev: Vite (recommended)
+
+Folder Structure
+portfolio/
 ├─ public/
-│  └─ Vishu.jpeg                 # avatar (example)
+│  ├─ Vishu.jpeg                # avatar
+│  ├─ WebDeveloper.pdf          # CV 1 (optional)
+│  └─ MLresume.pdf              # CV 2 (optional)
 ├─ src/
 │  ├─ components/
-│  │  └─ ProjectDetails.tsx      # modal with carousel + mobile sticky CTA
-│  ├─ App.jsx                    # main page sections
-│  ├─ main.jsx                   # React entry
-│  ├─ index.css                  # Tailwind directives & custom CSS
-│  └─ styles.css                 # (if you keep separate custom CSS)
+│  │  └─ ProjectDetails.tsx     # modal with carousel + mobile sticky CTA
+│  ├─ App.jsx                   # main landing page (all sections)
+│  ├─ main.jsx                  # React entry
+│  └─ index.css                 # Tailwind + custom styles (animations, glass, etc.)
+├─ index.html
 ├─ tailwind.config.js
 ├─ postcss.config.js
-├─ index.html
 └─ package.json
 
 
-If you’re using JavaScript instead of TypeScript, simply rename ProjectDetails.tsx to ProjectDetails.jsx and remove interfaces.
+Using JavaScript? Rename ProjectDetails.tsx → ProjectDetails.jsx and remove TypeScript interfaces.
 
-⚙️ Setup
+Prerequisites
 
-Clone & install
+Node.js 18+ and npm
 
-git clone <your-repo-url>
-cd <your-repo>
+(Optional) Git for version control
+
+(Optional) Place image/PDF assets in /public
+
+Setup & Run
+# 1) Install dependencies
 npm install
 
-
-Run the dev server
-
+# 2) Start the dev server (Vite)
 npm run dev
 
 
-Vite will print a local URL (usually http://localhost:5173).
+Vite will print a local URL (usually http://localhost:5173
+).
 
-Build for production
-
+Build & Preview
+# Production build
 npm run build
 
-
-Preview production build (optional)
-
+# Preview the production build locally
 npm run preview
 
-🧩 Tailwind Config
+Tailwind Setup (Quick Check)
 
-Ensure you have the basic Tailwind setup:
-
-index.css (or src/index.css)
+src/index.css
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Your custom CSS (from styles you pasted) can live here or in a separate file */
+/* Your custom CSS (animations, cards, starfield, etc.) */
 
 
 tailwind.config.js
@@ -121,10 +130,3 @@ export default {
     autoprefixer: {},
   },
 };
-
-
-
-
-
-
-
