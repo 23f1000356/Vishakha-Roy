@@ -1,0 +1,130 @@
+Vishakha Roy — Portfolio (React + Tailwind)
+
+A modern, animated developer portfolio built with React, Tailwind CSS, and a touch of Three.js (via @react-three/fiber + @react-three/drei).
+It includes smooth reveal animations, a starfield theme, a Project Details modal with a mobile-friendly layout, and a 3D desk scene in the contact section.
+
+✨ Features
+
+Clean dark theme with starfield background and glassy cards
+
+Responsive layout (desktop → tablet → mobile)
+
+Hero with rotating skill headline and avatar tilt effect
+
+Marquee skills strip (same background as the intro to avoid visible gaps)
+
+Skills / Experience / Education / Hackathons / Courses sections with subtle 3D & reveal effects
+
+Projects grid with click-to-open Project Details modal
+
+Carousel with arrows + dots
+
+Mobile top Close (X) always visible
+
+Sticky bottom CTA (“View Code”, “View Live”) always reachable on mobile
+
+Contact section with a 3D desk scene
+
+Scene height matches the contact form
+
+Rounded corners and background color tuned to the layout
+
+Accessibility touches (focus states, aria labels, keyboard Esc to close modal)
+
+Easy to extend project data (projectsData) and section content
+
+🧰 Tech Stack
+
+React (Hooks, functional components)
+
+Tailwind CSS (utility-first styling)
+
+Lucide React (icons)
+
+@react-three/fiber & @react-three/drei (3D canvas)
+
+Vite (recommended dev server & bundler)
+
+You can use CRA as well, but Vite provides a faster dev experience.
+
+📁 Project Structure (suggested)
+.
+├─ public/
+│  └─ Vishu.jpeg                 # avatar (example)
+├─ src/
+│  ├─ components/
+│  │  └─ ProjectDetails.tsx      # modal with carousel + mobile sticky CTA
+│  ├─ App.jsx                    # main page sections
+│  ├─ main.jsx                   # React entry
+│  ├─ index.css                  # Tailwind directives & custom CSS
+│  └─ styles.css                 # (if you keep separate custom CSS)
+├─ tailwind.config.js
+├─ postcss.config.js
+├─ index.html
+└─ package.json
+
+
+If you’re using JavaScript instead of TypeScript, simply rename ProjectDetails.tsx to ProjectDetails.jsx and remove interfaces.
+
+⚙️ Setup
+
+Clone & install
+
+git clone <your-repo-url>
+cd <your-repo>
+npm install
+
+
+Run the dev server
+
+npm run dev
+
+
+Vite will print a local URL (usually http://localhost:5173).
+
+Build for production
+
+npm run build
+
+
+Preview production build (optional)
+
+npm run preview
+
+🧩 Tailwind Config
+
+Ensure you have the basic Tailwind setup:
+
+index.css (or src/index.css)
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Your custom CSS (from styles you pasted) can live here or in a separate file */
+
+
+tailwind.config.js
+
+export default {
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  theme: { extend: {} },
+  plugins: [],
+};
+
+
+postcss.config.js
+
+export default {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+};
+
+
+
+
+
+
+
