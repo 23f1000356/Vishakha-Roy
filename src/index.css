@@ -176,9 +176,16 @@ section { position: relative; z-index: 2; }
   align-items: center;
   gap: 56px;
   white-space: nowrap;
-  animation: marquee 70s linear infinite;
+  animation: marquee 8s linear infinite; /* Fast on mobile */
   will-change: transform;
 }
+
+@media (min-width: 768px) {
+  .marquee-track {
+    animation-duration: 30s; /* Slower on desktop/tablet */
+  }
+}
+
 .marquee:hover .marquee-track { animation-play-state: paused; }
 
 /* label styles (support both class names) */

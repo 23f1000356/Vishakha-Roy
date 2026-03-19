@@ -48,7 +48,7 @@ function useInView(threshold = 0.2) {
 }
 
 const Reveal = ({ effect = "up", className = "", children }) => {
-  const [ref, inView] = useInView(0.2);
+  const [ref, inView] = useInView(0.05);
   const map = {
     up: "reveal-up",
     left: "reveal-left",
@@ -288,7 +288,7 @@ const SkillGroup = ({ title, items, slideFrom = "left" }: { title: string; items
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: "-60px" }}
+      viewport={{ once: true, margin: "0px" }}
     >
       <div
         className="glass rounded-2xl p-6 text-white will-change-transform transition-all skill-card"
@@ -312,7 +312,7 @@ const SkillGroup = ({ title, items, slideFrom = "left" }: { title: string; items
           variants={itemContainerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-40px" }}
+          viewport={{ once: true, margin: "0px" }}
         >
           {items.map((it, i) => (
             <motion.div
@@ -464,7 +464,7 @@ const ScrollSplitText = ({ text, className = "" }) => {
     <motion.div
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: "-20% 0px" }}
+      viewport={{ once: true, margin: "0px" }}
       variants={{
         visible: { transition: { staggerChildren: 0.03 } }
       }}
@@ -604,22 +604,22 @@ const DraggablePlaceholder = ({ children, constraintsRef, style, y, rotate, dura
 
 const OutlineToFillHeading = ({ text, className = "mb-12" }: { text: string; className?: string }) => (
   <div className={`relative text-center ${className}`} style={{ height: "1.25em" }}>
-    <span className="text-5xl font-bold uppercase invisible block leading-none" aria-hidden="true">{text}</span>
+    <span className="text-2xl sm:text-4xl md:text-5xl font-bold uppercase invisible block leading-none" aria-hidden="true">{text}</span>
     <motion.h2
       initial={{ y: 60, opacity: 1 }}
       whileInView={{ y: [60, 0, 0, 0], opacity: [1, 1, 1, 0] }}
-      viewport={{ once: true, margin: "-80px" }}
+      viewport={{ once: true, margin: "0px" }}
       transition={{ duration: 2.3, times: [0, 0.35, 0.78, 1], ease: "easeOut" }}
-      className="text-5xl font-bold uppercase absolute inset-0 flex items-center justify-center pointer-events-none"
+      className="text-2xl sm:text-4xl md:text-5xl font-bold uppercase absolute inset-0 flex items-center justify-center pointer-events-none"
     >
       <span style={{ WebkitTextStroke: "2px rgba(255,255,255,0.55)", color: "transparent" }}>{text}</span>
     </motion.h2>
     <motion.h2
       initial={{ opacity: 0 }}
       whileInView={{ opacity: [0, 0, 1] }}
-      viewport={{ once: true, margin: "-80px" }}
+      viewport={{ once: true, margin: "0px" }}
       transition={{ duration: 2.3, times: [0, 0.78, 1], ease: "easeOut" }}
-      className="text-5xl font-bold uppercase absolute inset-0 flex items-center justify-center text-white"
+      className="text-2xl sm:text-4xl md:text-5xl font-bold uppercase absolute inset-0 flex items-center justify-center text-white"
     >
       {text}
     </motion.h2>
@@ -635,52 +635,54 @@ const AboutMeSection = () => {
       ref={containerRef}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: "-100px" }}
+      viewport={{ once: true, margin: "0px" }}
       className="relative py-24 min-h-[100vh] flex flex-col justify-center items-center bg-[#0a0a0f] overflow-hidden"
     >
       <div className="absolute inset-0 bg-gradient-to-t from-[#050508] to-[#0a0a0f] opacity-80" />
 
-      {/* Corner Elements (Draggable Placeholders) */}
-      <DraggablePlaceholder
-        constraintsRef={containerRef}
-        style={{ top: "8%", left: "5%", width: 260, height: 260 }}
-        y={[-15, 15]} rotate={[0, 8, 0]} duration={4.5}
-        entryX={-300} entryY={-150}
-      >
-        <img src={reactImg} alt="React" className="w-full h-full object-contain drop-shadow-[0_0_20px_rgba(100,200,255,0.8)] pointer-events-none" />
-      </DraggablePlaceholder>
+      {/* Corner Elements (Draggable Placeholders) — hidden on mobile */}
+      <div className="hidden lg:block">
+        <DraggablePlaceholder
+          constraintsRef={containerRef}
+          style={{ top: "8%", left: "5%", width: 260, height: 260 }}
+          y={[-15, 15]} rotate={[0, 8, 0]} duration={4.5}
+          entryX={-300} entryY={-150}
+        >
+          <img src={reactImg} alt="React" className="w-full h-full object-contain drop-shadow-[0_0_20px_rgba(100,200,255,0.8)] pointer-events-none" />
+        </DraggablePlaceholder>
 
-      <DraggablePlaceholder
-        constraintsRef={containerRef}
-        style={{ top: "15%", right: "5%", width: 240, height: 240 }}
-        y={[10, -10]} rotate={[0, -5, 0]} duration={5}
-        entryX={200} entryY={-100}
-      >
-        <img src={pythonImg} alt="Python" className="w-full h-full object-contain drop-shadow-[0_0_20px_rgba(255,200,100,0.8)] pointer-events-none" />
-      </DraggablePlaceholder>
+        <DraggablePlaceholder
+          constraintsRef={containerRef}
+          style={{ top: "15%", right: "5%", width: 240, height: 240 }}
+          y={[10, -10]} rotate={[0, -5, 0]} duration={5}
+          entryX={200} entryY={-100}
+        >
+          <img src={pythonImg} alt="Python" className="w-full h-full object-contain drop-shadow-[0_0_20px_rgba(255,200,100,0.8)] pointer-events-none" />
+        </DraggablePlaceholder>
 
-      <DraggablePlaceholder
-        constraintsRef={containerRef}
-        style={{ bottom: "15%", left: "8%", width: 250, height: 250 }}
-        y={[-15, 15]} rotate={[0, 8, 0]} duration={6}
-        entryX={-200} entryY={150}
-      >
-        <img src={jsImg} alt="JavaScript" className="w-full h-full object-contain drop-shadow-[0_0_20px_rgba(255,255,0,0.8)] pointer-events-none" />
-      </DraggablePlaceholder>
+        <DraggablePlaceholder
+          constraintsRef={containerRef}
+          style={{ bottom: "15%", left: "8%", width: 250, height: 250 }}
+          y={[-15, 15]} rotate={[0, 8, 0]} duration={6}
+          entryX={-200} entryY={150}
+        >
+          <img src={jsImg} alt="JavaScript" className="w-full h-full object-contain drop-shadow-[0_0_20px_rgba(255,255,0,0.8)] pointer-events-none" />
+        </DraggablePlaceholder>
 
-      <DraggablePlaceholder
-        constraintsRef={containerRef}
-        style={{ bottom: "10%", right: "8%", width: 220, height: 220 }}
-        y={[15, -15]} rotate={[0, -8, 0]} duration={4.5}
-        entryX={150} entryY={100}
-      >
-        <img src={githubImg} alt="GitHub" className="w-full h-full object-contain drop-shadow-[0_0_20px_rgba(255,255,255,0.5)] pointer-events-none" />
-      </DraggablePlaceholder>
+        <DraggablePlaceholder
+          constraintsRef={containerRef}
+          style={{ bottom: "10%", right: "8%", width: 220, height: 220 }}
+          y={[15, -15]} rotate={[0, -8, 0]} duration={4.5}
+          entryX={150} entryY={100}
+        >
+          <img src={githubImg} alt="GitHub" className="w-full h-full object-contain drop-shadow-[0_0_20px_rgba(255,255,255,0.5)] pointer-events-none" />
+        </DraggablePlaceholder>
+      </div>
 
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{ once: true, margin: "0px" }}
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         className="max-w-4xl mx-auto px-4 relative z-10 w-full text-center"
       >
@@ -688,7 +690,7 @@ const AboutMeSection = () => {
         <div className="relative mb-10" style={{ height: "1.25em" }}>
           {/* Invisible sizer — keeps wrapper height constant */}
           <span
-            className="text-5xl md:text-7xl font-extrabold tracking-wide uppercase invisible block leading-none"
+            className="text-3xl sm:text-5xl md:text-7xl font-extrabold tracking-wide uppercase invisible block leading-none"
             aria-hidden="true"
           >
             ABOUT ME
@@ -698,13 +700,13 @@ const AboutMeSection = () => {
           <motion.h2
             initial={{ y: 60, opacity: 1 }}
             whileInView={{ y: [60, 0, 0, 0], opacity: [1, 1, 1, 0] }}
-            viewport={{ once: true, margin: "-80px" }}
+            viewport={{ once: true, margin: "0px" }}
             transition={{
               duration: 2.3,
               times: [0, 0.35, 0.78, 1],
               ease: "easeOut"
             }}
-            className="text-5xl md:text-7xl font-extrabold tracking-wide uppercase absolute inset-0 flex items-center justify-center pointer-events-none"
+            className="text-3xl sm:text-5xl md:text-7xl font-extrabold tracking-wide uppercase absolute inset-0 flex items-center justify-center pointer-events-none"
           >
             <span style={{ WebkitTextStroke: "2px rgba(255,255,255,0.55)", color: "transparent" }}>
               ABOUT ME
@@ -715,13 +717,13 @@ const AboutMeSection = () => {
           <motion.h2
             initial={{ opacity: 0 }}
             whileInView={{ opacity: [0, 0, 1] }}
-            viewport={{ once: true, margin: "-80px" }}
+            viewport={{ once: true, margin: "0px" }}
             transition={{
               duration: 2.3,
               times: [0, 0.78, 1],
               ease: "easeOut"
             }}
-            className="text-5xl md:text-7xl font-extrabold tracking-wide uppercase absolute inset-0 flex items-center justify-center text-white"
+            className="text-3xl sm:text-5xl md:text-7xl font-extrabold tracking-wide uppercase absolute inset-0 flex items-center justify-center text-white"
           >
             ABOUT ME
             <div className="absolute inset-0 bg-blue-500/10 blur-3xl -z-10" />
@@ -770,25 +772,29 @@ const AboutMeSection = () => {
       </motion.div>
 
       {/* 3 Interactive Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mt-32 w-full max-w-6xl px-4 mx-auto relative z-20 group/cards">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mt-16 sm:mt-32 w-full max-w-6xl px-4 mx-auto relative z-20 group/cards">
         {[
           {
             id: 1,
-            title: "Smart India Hackathon",
-            bullets: ["National Winner – SIH 2025 (Punjab)", "Built a healthcare solution", "Participated in 10+ hackathons"],
-            icon: <Trophy size={32} className="text-yellow-400 group-hover:drop-shadow-[0_0_15px_rgba(250,200,50,0.8)] transition-all duration-300" />
+            title: "Full Stack Developer",
+            bullets: ["Building scalable web applications", "React, Node.js, MongoDB", "Fast and user-friendly interfaces"],
+            icon: <Code size={32} className="text-blue-400 group-hover:drop-shadow-[0_0_15px_rgba(100,150,255,0.8)] transition-all duration-300" />,
+            mobileOrder: 2,
           },
           {
             id: 2,
-            title: "Full Stack Developer",
-            bullets: ["Building scalable web applications", "React, Node.js, MongoDB", "Fast and user-friendly interfaces"],
-            icon: <Code size={32} className="text-blue-400 group-hover:drop-shadow-[0_0_15px_rgba(100,150,255,0.8)] transition-all duration-300" />
+            title: "Smart India Hackathon Winner",
+            bullets: ["National Winner – SIH 2025 (Punjab)", "Built a healthcare solution", "Participated in 10+ hackathons"],
+            icon: <img src={sihImg} alt="SIH" className="w-10 h-10 object-contain group-hover:drop-shadow-[0_0_15px_rgba(250,200,50,0.8)] transition-all duration-300" />,
+            highlight: true,
+            mobileOrder: 1,
           },
           {
             id: 3,
             title: "AI / ML Engineer",
             bullets: ["Crafting and training AI models", "Python, Scikit-learn, TensorFlow", "Data-driven problem solving"],
-            icon: <Brain size={32} className="text-purple-400 group-hover:drop-shadow-[0_0_15px_rgba(200,100,255,0.8)] transition-all duration-300" />
+            icon: <Brain size={32} className="text-purple-400 group-hover:drop-shadow-[0_0_15px_rgba(200,100,255,0.8)] transition-all duration-300" />,
+            mobileOrder: 3,
           }
         ].map((card, i) => (
           <motion.div
@@ -797,27 +803,27 @@ const AboutMeSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: i * 0.15 + 0.3 }}
-            className="h-full flex flex-col transition-opacity duration-300 group-hover/cards:opacity-50 hover:!opacity-100"
+            className={`h-full flex flex-col transition-opacity duration-300 group-hover/cards:opacity-50 hover:!opacity-100 ${i === 0 ? 'order-2 lg:order-none' : i === 1 ? 'order-1 lg:order-none' : 'order-3 lg:order-none'}`}
           >
-            <TiltCard className="flex flex-col h-full min-h-[340px] p-6 lg:p-8 cursor-pointer relative justify-start">
+            <TiltCard className={`flex flex-col h-full min-h-[280px] sm:min-h-[340px] p-5 sm:p-6 lg:p-8 cursor-pointer relative justify-start ${(card as any).highlight ? 'border-yellow-400/30 shadow-[0_0_30px_rgba(250,200,50,0.15)]' : ''}`}>
               {/* Icon */}
-              <div className="mb-6 transform group-hover:scale-[1.15] transition-transform duration-300 origin-left">
-                <span className="p-4 inline-flex items-center justify-center rounded-2xl bg-white/5 border border-white/10 group-hover:bg-white/10 group-hover:border-white/20 transition-all shadow-[0_0_15px_rgba(0,0,0,0.2)]">
+              <div className={`mb-4 sm:mb-6 transform group-hover:scale-[1.15] transition-transform duration-300 ${(card as any).highlight ? 'origin-center flex justify-center' : 'origin-left'}`}>
+                <span className={`p-3 sm:p-4 inline-flex items-center justify-center rounded-2xl bg-white/5 border border-white/10 group-hover:bg-white/10 group-hover:border-white/20 transition-all shadow-[0_0_15px_rgba(0,0,0,0.2)] ${(card as any).highlight ? 'bg-yellow-400/10 border-yellow-400/20' : ''}`}>
                   {card.icon}
                 </span>
               </div>
 
               {/* Title & Divider */}
-              <div className="mb-6">
-                <h3 className="text-2xl font-bold text-white/90 group-hover:text-white transition-colors mb-4">{card.title}</h3>
-                <div className="w-[50px] h-[2px] bg-gradient-to-r from-blue-500 to-purple-500 rounded-full" />
+              <div className={`mb-4 sm:mb-6 ${(card as any).highlight ? 'text-center' : ''}`}>
+                <h3 className={`text-xl sm:text-2xl font-bold group-hover:text-white transition-colors mb-3 sm:mb-4 ${(card as any).highlight ? 'text-yellow-300 text-2xl sm:text-3xl font-extrabold' : 'text-white/90'}`}>{card.title}</h3>
+                <div className={`h-[2px] bg-gradient-to-r rounded-full ${(card as any).highlight ? 'w-[80px] from-yellow-400 to-orange-500 mx-auto' : 'w-[50px] from-blue-500 to-purple-500'}`} />
               </div>
 
               {/* Bullets */}
-              <ul className="text-left mt-auto transform group-hover:translate-y-[-5px] transition-all duration-300 relative z-10 flex flex-col gap-3">
+              <ul className={`mt-auto transform group-hover:translate-y-[-5px] transition-all duration-300 relative z-10 flex flex-col gap-2 sm:gap-3 ${(card as any).highlight ? 'text-center items-center' : 'text-left'}`}>
                 {card.bullets.map((bullet, idx) => (
-                  <li key={idx} className="flex items-start gap-3 text-[15px] text-white/60 group-hover:text-white/90 transition-colors">
-                    <span className="w-[6px] h-[6px] rounded-full bg-white/30 mt-2 shrink-0 group-hover:bg-blue-400 group-hover:shadow-[0_0_8px_rgba(100,200,255,0.8)] transition-all" />
+                  <li key={idx} className={`flex items-start gap-2 sm:gap-3 text-[13px] sm:text-[15px] group-hover:text-white/90 transition-colors ${(card as any).highlight ? 'text-white/80 font-medium' : 'text-white/60'}`}>
+                    <span className={`w-[6px] h-[6px] rounded-full mt-1.5 sm:mt-2 shrink-0 group-hover:shadow-[0_0_8px_rgba(100,200,255,0.8)] transition-all ${(card as any).highlight ? 'bg-yellow-400' : 'bg-white/30 group-hover:bg-blue-400'}`} />
                     <span className="leading-snug">{bullet}</span>
                   </li>
                 ))}
@@ -993,51 +999,109 @@ const App = () => {
         {/* Glow */}
         <div className="absolute top-1/4 left-1/4 w-[40vw] h-[40vw] max-w-[500px] bg-blue-600/20 mix-blend-screen rounded-full blur-[100px] -z-10" />
 
-        {/* Image anchored to left/bottom covering left half */}
-        <div className="absolute left-0 bottom-0 w-full lg:w-[50vw] h-[50vh] lg:h-[100vh] pointer-events-none z-10 flex justify-center lg:justify-start items-end">
+        {/* Desktop: Image anchored to left/bottom covering left half (hidden on mobile) */}
+        <div className="hidden lg:flex absolute left-0 bottom-0 w-[50vw] h-[100vh] pointer-events-none z-10 justify-start items-end">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ ease: [0.22, 1, 0.36, 1], duration: 0.9, delay: 0 }}
             whileHover={{ scale: 1.02, filter: "brightness(1.05) drop-shadow(0px 10px 30px rgba(100,200,255,0.15))" }}
             style={{ y: heroY }}
-            className="will-change-transform transform-gpu pointer-events-auto w-full h-full flex justify-center lg:justify-center items-end"
+            className="will-change-transform transform-gpu pointer-events-auto w-full h-full flex justify-center items-end"
           >
             <img
               src={vishakhaImg}
               alt="Vishakha Roy"
-              /* Scale forcefully bumps up the image size so it dominates the pane, anchoring to origin-bottom so it doesn't float up */
-              className="w-full h-[120%] lg:h-full object-contain object-bottom drop-shadow-[0_15px_30px_rgba(0,0,0,0.6)] scale-[1.1] lg:scale-[1.6] origin-bottom lg:origin-bottom"
+              className="w-full h-full object-contain object-bottom drop-shadow-[0_15px_30px_rgba(0,0,0,0.6)] scale-[1.6] origin-bottom"
             />
           </motion.div>
         </div>
 
-        {/* Text Container constrained to right side using grid offset */}
-        <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center relative z-20 w-full pt-[45vh] lg:pt-0">
-
-          {/* Empty div reserves space for the left half on desktop layout */}
-          <div className="hidden lg:block order-1" />
-
-          {/* Right Side: Text Content */}
-          <div className="order-2 text-white flex flex-col justify-center items-center lg:items-start lg:pl-10 xl:pl-16 relative z-20 text-center lg:text-left mt-10 lg:mt-0">
+        {/* Mobile layout: split left/right, then tagline + buttons */}
+        <div className="lg:hidden flex flex-col w-full relative z-20 pt-8 pb-8 px-0">
+          <div className="flex flex-row w-full items-center mb-4 min-h-[40vh]">
+            {/* Mobile Image — left half */}
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ ease: [0.22, 1, 0.36, 1], duration: 0.6 }}
-              className="text-3xl md:text-5xl font-semibold text-white/90 mb-3 tracking-wide"
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ ease: [0.22, 1, 0.36, 1], duration: 0.9, delay: 0.8 }}
+              className="w-1/2 flex justify-start items-center h-full"
             >
-              Hello, I am
+              <img
+                src={vishakhaImg}
+                alt="Vishakha Roy"
+                className="w-full h-[40vh] min-h-[300px] object-cover object-top drop-shadow-[0_15px_30px_rgba(0,0,0,0.6)]"
+              />
             </motion.div>
 
-            <SplitText text="Vishakha Roy" delay={0.6} className="text-[48px] md:text-7xl font-extrabold mb-4" />
+            {/* Mobile Text — right half */}
+            <div className="w-1/2 flex flex-col justify-center items-start pl-3 pr-2">
+              <motion.div
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ ease: [0.22, 1, 0.36, 1], duration: 0.6 }}
+                className="text-lg sm:text-2xl font-semibold text-white/90 mb-1 tracking-wide"
+              >
+                Hello, I am
+              </motion.div>
 
-            <SplitHeadline text="Shaping React into Real Projects that Deliver Results" delay={1.4} className="text-[28px] md:text-[42px] font-bold leading-[1.25] mb-8 tracking-tight max-w-lg" />
+              <div className="flex flex-col">
+                <SplitText text="Vishakha" delay={0.6} className="text-[28px] sm:text-[36px] font-extrabold leading-[1.1] text-white" />
+                <SplitText text="Roy" delay={0.8} className="text-[28px] sm:text-[36px] font-extrabold leading-[1.1] text-white mt-1" />
+              </div>
+            </div>
+          </div>
+
+          {/* Mobile: Tagline + Buttons */}
+          <div className="text-white flex flex-col items-center text-center px-4 mt-2">
+            <SplitHeadline text="Shaping React into Real Projects that Deliver Results" delay={1.4} className="text-[18px] sm:text-[28px] font-bold leading-[1.25] mb-4 tracking-tight max-w-lg" />
 
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ ease: [0.22, 1, 0.36, 1], duration: 0.8, delay: 2.5 }}
-              className="flex flex-wrap gap-4 mt-2 justify-center lg:justify-start"
+              className="flex flex-wrap gap-3 mt-2 justify-center"
+            >
+              <button onClick={() => scrollToSection("contact")} className="btn-solid text-sm sm:text-base">Let's Talk</button>
+              <a href="WebDeveloper.pdf" download className="btn-outline text-sm sm:text-base">Download Resume</a>
+              <div className="flex gap-4 items-center">
+                <a href="https://www.linkedin.com/in/vishakha-roy-52924b1b6/" target="_blank" rel="noopener noreferrer" className="social">
+                  <Linkedin size={20} />
+                </a>
+                <a href="https://github.com/23f1000356" target="_blank" rel="noopener noreferrer" className="social">
+                  <Github size={20} />
+                </a>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Desktop: Text Container constrained to right side using grid offset (hidden on mobile) */}
+        <div className="hidden lg:grid max-w-7xl mx-auto px-4 grid-cols-2 gap-8 items-center relative z-20 w-full">
+
+          {/* Empty div reserves space for the left half on desktop layout */}
+          <div className="order-1" />
+
+          {/* Right Side: Text Content */}
+          <div className="order-2 text-white flex flex-col justify-center items-start pl-10 xl:pl-16 relative z-20 text-left">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ ease: [0.22, 1, 0.36, 1], duration: 0.6 }}
+              className="text-5xl font-semibold text-white/90 mb-3 tracking-wide"
+            >
+              Hello, I am
+            </motion.div>
+
+            <SplitText text="Vishakha Roy" delay={0.6} className="text-7xl font-extrabold mb-4" />
+
+            <SplitHeadline text="Shaping React into Real Projects that Deliver Results" delay={1.4} className="text-[42px] font-bold leading-[1.25] mb-8 tracking-tight max-w-lg" />
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ ease: [0.22, 1, 0.36, 1], duration: 0.8, delay: 2.5 }}
+              className="flex flex-wrap gap-4 mt-2 justify-start"
             >
               <button onClick={() => scrollToSection("contact")} className="btn-solid">Let's Talk</button>
               <a href="WebDeveloper.pdf" download className="btn-outline">Download Resume</a>
@@ -1057,7 +1121,7 @@ const App = () => {
       {/* MARQUEE — SLIDING IMAGE */}
       <section className="bg-black">
         <div className="overflow-hidden relative marquee" style={{ padding: 0, border: "none", background: "transparent" }}>
-          <div className="flex whitespace-nowrap marquee-track" style={{ animationDuration: "30s", gap: 0 }}>
+          <div className="flex whitespace-nowrap marquee-track" style={{ gap: 0 }}>
             {Array.from({ length: 4 }).map((_, i) => (
               <div key={i} className="flex shrink-0">
                 <img src={pythonImg} alt="python moving visual" className="h-[220px] md:h-[260px] w-auto object-cover opacity-80" />
@@ -1077,8 +1141,8 @@ const App = () => {
       {/* ABOUT ME */}
       <AboutMeSection />
 
-      {/* WEBSITE DESIGNS — Two-row scroll parallax */}
-      <section className="py-24 bg-black text-white overflow-hidden">
+      {/* WEBSITE DESIGNS — Two-row scroll parallax (desktop) / Grid (mobile) */}
+      <section className="py-12 sm:py-24 bg-black text-white overflow-hidden">
         <div className="max-w-6xl mx-auto px-4">
           <OutlineToFillHeading text="Website Designs" />
         </div>
@@ -1087,6 +1151,16 @@ const App = () => {
             webImg1, webImg2, webImg3, webImg4, webImg5,
             webImg6, webImg7, webImg8, webImg9, webImg10,
           ];
+          const designLinks: Record<number, string> = {
+            1: "https://syntax-syndicate-seven.vercel.app/",   // Smart Career Intelligence
+            2: "https://hospital-frontend-6bwp.onrender.com/",  // Healthcare Solutions
+            3: "https://railway-wheat.vercel.app/",             // Control Dashboard
+          };
+          const designNames = [
+            "Website 1", "Smart Career Intelligence", "Healthcare Solutions",
+            "Control Dashboard", "Website Design 5", "Website Design 6",
+            "Website Design 7", "Website Design 8", "Website Design 9", "Website Design 10"
+          ];
           const dRow1 = designImages.slice(0, 5);
           const dRow2 = designImages.slice(5, 10);
           const designRef = useRef<HTMLDivElement>(null);
@@ -1094,44 +1168,68 @@ const App = () => {
           const dRow1X = useTransform(designScroll, [0, 1], ["-5%", "5%"]);
           const dRow2X = useTransform(designScroll, [0, 1], ["5%", "-5%"]);
 
+          const DesignCard = ({ img, idx, compact = false }: { img: string; idx: number; compact?: boolean }) => {
+            const inner = (
+              <div className={`${compact ? 'rounded-xl' : 'rounded-2xl'} overflow-hidden border${compact ? '' : '-2'} border-white/10 hover:border-white/25 hover:shadow-[0_0_${compact ? '20' : '30'}px_rgba(100,100,255,0.${compact ? '1' : '12'})] transition-all duration-300`}>
+                <img src={img} alt={designNames[idx] || `Website Design ${idx + 1}`} className={`w-full ${compact ? 'h-[120px] sm:h-[160px]' : 'h-[220px]'} object-cover group-hover:scale-105 transition-transform duration-500`} />
+              </div>
+            );
+            if (designLinks[idx]) {
+              return <a href={designLinks[idx]} target="_blank" rel="noopener noreferrer">{inner}</a>;
+            }
+            return inner;
+          };
+
           return (
-            <div ref={designRef} className="mt-8 space-y-6 px-4">
-              {/* Row 1 slides right */}
-              <motion.div style={{ x: dRow1X }} className="flex gap-5">
-                {dRow1.map((img, i) => (
+            <div ref={designRef} className="mt-8 px-4">
+              {/* Mobile: 2-column grid */}
+              <div className="md:hidden grid grid-cols-2 gap-3">
+                {designImages.slice(0, 4).map((img, i) => (
                   <motion.div
                     key={i}
-                    initial={{ opacity: 0, y: 40 }}
+                    initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                    whileHover={{ scale: 1.05, y: -8 }}
-                    className="min-w-[300px] max-w-[320px] shrink-0 group"
+                    transition={{ duration: 0.4, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] }}
+                    className="group"
                   >
-                    <div className="rounded-2xl overflow-hidden border-2 border-white/10 hover:border-white/25 hover:shadow-[0_0_30px_rgba(100,100,255,0.12)] transition-all duration-300">
-                      <img src={img} alt={`Website Design ${i + 1}`} className="w-full h-[220px] object-cover group-hover:scale-105 transition-transform duration-500" />
-                    </div>
+                    <DesignCard img={img} idx={i} compact />
                   </motion.div>
                 ))}
-              </motion.div>
-              {/* Row 2 slides left */}
-              <motion.div style={{ x: dRow2X }} className="flex gap-5">
-                {dRow2.map((img, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, y: 40 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: i * 0.1 + 0.3, ease: [0.22, 1, 0.36, 1] }}
-                    whileHover={{ scale: 1.05, y: -8 }}
-                    className="min-w-[300px] max-w-[320px] shrink-0 group"
-                  >
-                    <div className="rounded-2xl overflow-hidden border-2 border-white/10 hover:border-white/25 hover:shadow-[0_0_30px_rgba(100,100,255,0.12)] transition-all duration-300">
-                      <img src={img} alt={`Website Design ${i + 6}`} className="w-full h-[220px] object-cover group-hover:scale-105 transition-transform duration-500" />
-                    </div>
-                  </motion.div>
-                ))}
-              </motion.div>
+              </div>
+              {/* Desktop: two-row parallax */}
+              <div className="hidden md:block space-y-6">
+                <motion.div style={{ x: dRow1X }} className="flex gap-5">
+                  {dRow1.map((img, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, y: 40 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                      whileHover={{ scale: 1.05, y: -8 }}
+                      className="min-w-[300px] max-w-[320px] shrink-0 group"
+                    >
+                      <DesignCard img={img} idx={i} />
+                    </motion.div>
+                  ))}
+                </motion.div>
+                <motion.div style={{ x: dRow2X }} className="flex gap-5">
+                  {dRow2.map((img, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, y: 40 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: i * 0.1 + 0.3, ease: [0.22, 1, 0.36, 1] }}
+                      whileHover={{ scale: 1.05, y: -8 }}
+                      className="min-w-[300px] max-w-[320px] shrink-0 group"
+                    >
+                      <DesignCard img={img} idx={i + 5} />
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </div>
             </div>
           );
         })()}
@@ -1206,12 +1304,43 @@ const App = () => {
       <section id="education" className="py-16 bg-black text-white">
         <div className="max-w-6xl mx-auto px-4" ref={eduRef as any}>
           <OutlineToFillHeading text="Educational Journey" />
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-7">
+          {/* Mobile: compact flex layout */}
+          <div className="md:hidden flex flex-wrap justify-center gap-3">
+            <Reveal effect="left">
+              <div className="glass p-4 rounded-2xl w-[160px]">
+                <div className="text-blue-300 mb-2 flex justify-center"><University size={36} /></div>
+                <h3 className="text-sm font-bold mb-1 text-center">B.E. Computer Science</h3>
+                <h4 className="text-blue-300 font-semibold mb-1 text-center text-xs">St. John College of Engineering</h4>
+                <p className="text-white/70 mb-1 text-center text-xs">May 2022 - May 2026</p>
+                <p className="font-bold text-center text-xs">CGPA: 8.5</p>
+              </div>
+            </Reveal>
+            <Reveal effect="up">
+              <div className="glass p-4 rounded-2xl w-[160px]">
+                <div className="text-blue-300 mb-2 flex justify-center"><GraduationCap size={36} /></div>
+                <h3 className="text-sm font-bold mb-1 text-center">BS Data Science & Programming</h3>
+                <h4 className="text-blue-300 font-semibold mb-1 text-center text-xs">IIT Madras (Online)</h4>
+                <p className="text-white/70 mb-1 text-center text-xs">Jan 2023 - May 2026</p>
+                <p className="font-bold text-center text-xs">CGPA: 7.8</p>
+              </div>
+            </Reveal>
+            <Reveal effect="right">
+              <div className="glass p-4 rounded-2xl w-[160px]">
+                <div className="text-blue-300 mb-2 flex justify-center"><School size={36} /></div>
+                <h3 className="text-sm font-bold mb-1 text-center">Higher Secondary Certificate</h3>
+                <h4 className="text-blue-300 font-semibold mb-1 text-center text-xs">Delhi Public School</h4>
+                <p className="text-white/70 mb-1 text-center text-xs">Mar 2020 - Feb 2022</p>
+                <p className="font-bold text-center text-xs">Percentage: 75%</p>
+              </div>
+            </Reveal>
+          </div>
+          {/* Desktop: full-width 3-column grid (original layout) */}
+          <div className="hidden md:grid grid-cols-3 gap-7">
             <Reveal effect="left">
               <div className="glass p-7 rounded-2xl">
                 <div className="text-blue-300 mb-4 flex justify-center"><University size={48} /></div>
                 <h3 className="text-xl font-bold mb-2 text-center">B.E. Computer Science</h3>
-                <h4 className="text-blue-300 font-semibold mb-2 text-center">St. John College of Engineering and Management</h4>
+                <h4 className="text-blue-300 font-semibold mb-2 text-center">St. John College of Engineering</h4>
                 <p className="text-white/70 mb-2 text-center">May 2022 - May 2026</p>
                 <p className="font-bold text-center">CGPA: 8.5</p>
               </div>
@@ -1229,7 +1358,7 @@ const App = () => {
               <div className="glass p-7 rounded-2xl">
                 <div className="text-blue-300 mb-4 flex justify-center"><School size={48} /></div>
                 <h3 className="text-xl font-bold mb-2 text-center">Higher Secondary Certificate</h3>
-                <h4 className="text-blue-300 font-semibold mb-2 text-center">Delhi Public School, Sushant Lok</h4>
+                <h4 className="text-blue-300 font-semibold mb-2 text-center">Delhi Public School</h4>
                 <p className="text-white/70 mb-2 text-center">Mar 2020 - Feb 2022</p>
                 <p className="font-bold text-center">Percentage: 75%</p>
               </div>
@@ -1239,10 +1368,39 @@ const App = () => {
       </section>
 
       {/* PROJECTS */}
-      <section id="projects" className="py-16 bg-black text-white">
+      <section id="projects" className="py-12 sm:py-16 bg-black text-white">
         <div className="max-w-6xl mx-auto px-4">
           <OutlineToFillHeading text="Featured Projects" />
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+          {/* Mobile: compact 2-column grid */}
+          <div className="md:hidden grid grid-cols-2 gap-3">
+            {projects.slice(0, 6).map((project, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.05, ease: [0.22, 1, 0.36, 1] }}
+                className="project-card-enhanced bg-white/5 backdrop-blur-lg rounded-xl overflow-hidden cursor-pointer"
+                onClick={project.onClick || (() => { })}
+              >
+                <div className="h-24 bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center text-3xl">
+                  {typeof project.icon === "string" ? project.icon : project.icon}
+                </div>
+                <div className="p-3">
+                  <h3 className="text-sm font-bold mb-1 leading-tight">{project.title}</h3>
+                  <div className="flex flex-wrap gap-1">
+                    {project.tech.slice(0, 2).map((tech, techIndex) => (
+                      <span key={techIndex} className="px-2 py-0.5 bg-white/10 rounded-full text-[10px]">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+          {/* Desktop: full cards */}
+          <div className="hidden md:grid grid-cols-2 lg:grid-cols-3 gap-7">
             {projects.map((project, index) => (
               <Reveal key={index} effect="up">
                 <div
@@ -1270,8 +1428,8 @@ const App = () => {
         </div>
       </section>
 
-      {/* HACKATHONS — Two-row scroll parallax */}
-      <section id="hackathons" className="py-24 bg-black text-white overflow-hidden" ref={hackRef as any}>
+      {/* HACKATHONS — Two-row scroll parallax (desktop) / stacked cards (mobile) */}
+      <section id="hackathons" className="py-12 sm:py-24 bg-black text-white overflow-hidden" ref={hackRef as any}>
         <div className="max-w-6xl mx-auto px-4">
           <OutlineToFillHeading text="Hackathon Achievements" />
         </div>
@@ -1296,54 +1454,74 @@ const App = () => {
           const hackRow2X = useTransform(hackScroll, [0, 1], ["5%", "-5%"]);
 
           return (
-            <div ref={hackParallaxRef} className="mt-8 space-y-6 px-4">
-              {/* Row 1 slides right */}
-              <motion.div style={{ x: hackRow1X }} className="flex gap-5">
-                {row1.map((card, i) => (
+            <div ref={hackParallaxRef} className="mt-8 px-4">
+              {/* Mobile: vertically stacked scrollable cards */}
+              <div className="md:hidden grid grid-cols-2 gap-3">
+                {hackCards.slice(0, 4).map((card, i) => (
                   <motion.div
                     key={i}
-                    initial={{ opacity: 0, y: 40 }}
+                    initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                    whileHover={{ scale: 1.05, y: -8 }}
-                    className="min-w-[300px] max-w-[320px] shrink-0 group"
+                    transition={{ duration: 0.4, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] }}
+                    className="group"
                   >
-                    <div className="rounded-2xl p-5 border-2 border-white/10 bg-white/[0.03] hover:border-white/25 hover:shadow-[0_0_30px_rgba(100,100,255,0.12)] transition-all duration-300" style={{ backdropFilter: "blur(8px)" }}>
-                      <h4 className="text-lg font-bold text-white mb-1 group-hover:text-blue-300 transition-colors">{card.title}</h4>
-                      <p className="text-sm font-semibold text-blue-400/80 mb-3">{card.product}</p>
-                      <p className="text-sm text-white/60 leading-relaxed group-hover:text-white/80 transition-colors">{card.desc}</p>
+                    <div className="rounded-xl p-3 border border-white/10 bg-white/[0.03] hover:border-white/25 transition-all duration-300 h-full" style={{ backdropFilter: "blur(8px)" }}>
+                      <h4 className="text-xs font-bold text-white mb-1 group-hover:text-blue-300 transition-colors leading-tight">{card.title}</h4>
+                      <p className="text-[10px] font-semibold text-blue-400/80 mb-1">{card.product}</p>
+                      <p className="text-[10px] text-white/60 leading-snug line-clamp-3">{card.desc}</p>
                     </div>
                   </motion.div>
                 ))}
-              </motion.div>
-              {/* Row 2 slides left */}
-              <motion.div style={{ x: hackRow2X }} className="flex gap-5">
-                {row2.map((card, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, y: 40 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: i * 0.1 + 0.3, ease: [0.22, 1, 0.36, 1] }}
-                    whileHover={{ scale: 1.05, y: -8 }}
-                    className="min-w-[300px] max-w-[320px] shrink-0 group"
-                  >
-                    <div className="rounded-2xl p-5 border-2 border-white/10 bg-white/[0.03] hover:border-white/25 hover:shadow-[0_0_30px_rgba(100,100,255,0.12)] transition-all duration-300" style={{ backdropFilter: "blur(8px)" }}>
-                      <h4 className="text-lg font-bold text-white mb-1 group-hover:text-blue-300 transition-colors">{card.title}</h4>
-                      <p className="text-sm font-semibold text-blue-400/80 mb-3">{card.product}</p>
-                      <p className="text-sm text-white/60 leading-relaxed group-hover:text-white/80 transition-colors">{card.desc}</p>
-                    </div>
-                  </motion.div>
-                ))}
-              </motion.div>
+              </div>
+              {/* Desktop: two-row parallax */}
+              <div className="hidden md:block space-y-6">
+                <motion.div style={{ x: hackRow1X }} className="flex gap-5">
+                  {row1.map((card, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, y: 40 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                      whileHover={{ scale: 1.05, y: -8 }}
+                      className="min-w-[300px] max-w-[320px] shrink-0 group"
+                    >
+                      <div className="rounded-2xl p-5 border-2 border-white/10 bg-white/[0.03] hover:border-white/25 hover:shadow-[0_0_30px_rgba(100,100,255,0.12)] transition-all duration-300" style={{ backdropFilter: "blur(8px)" }}>
+                        <h4 className="text-lg font-bold text-white mb-1 group-hover:text-blue-300 transition-colors">{card.title}</h4>
+                        <p className="text-sm font-semibold text-blue-400/80 mb-3">{card.product}</p>
+                        <p className="text-sm text-white/60 leading-relaxed group-hover:text-white/80 transition-colors">{card.desc}</p>
+                      </div>
+                    </motion.div>
+                  ))}
+                </motion.div>
+                <motion.div style={{ x: hackRow2X }} className="flex gap-5">
+                  {row2.map((card, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, y: 40 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: i * 0.1 + 0.3, ease: [0.22, 1, 0.36, 1] }}
+                      whileHover={{ scale: 1.05, y: -8 }}
+                      className="min-w-[300px] max-w-[320px] shrink-0 group"
+                    >
+                      <div className="rounded-2xl p-5 border-2 border-white/10 bg-white/[0.03] hover:border-white/25 hover:shadow-[0_0_30px_rgba(100,100,255,0.12)] transition-all duration-300" style={{ backdropFilter: "blur(8px)" }}>
+                        <h4 className="text-lg font-bold text-white mb-1 group-hover:text-blue-300 transition-colors">{card.title}</h4>
+                        <p className="text-sm font-semibold text-blue-400/80 mb-3">{card.product}</p>
+                        <p className="text-sm text-white/60 leading-relaxed group-hover:text-white/80 transition-colors">{card.desc}</p>
+                      </div>
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </div>
             </div>
           );
         })()}
       </section>
 
-      {/* CERTIFICATIONS & COURSES — Cinematic Carousel */}
-      <section id="courses" className="py-24 bg-black text-white overflow-hidden" ref={courseRef as any}>
+      {/* CERTIFICATIONS & COURSES — Cinematic Carousel (desktop) / Stacked cards (mobile) */}
+      <section id="courses" className="py-12 sm:py-24 bg-black text-white overflow-hidden" ref={courseRef as any}>
         <div className="max-w-6xl mx-auto px-4">
           <OutlineToFillHeading text="Certifications & Courses" />
         </div>
@@ -1367,10 +1545,83 @@ const App = () => {
             if (idx >= 0 && idx < courses.length) setActiveIdx(idx);
           };
 
+          // Detect mobile via window width for carousel offset
+          const [isMobile, setIsMobile] = useState(false);
+          useEffect(() => {
+            const check = () => setIsMobile(window.innerWidth < 640);
+            check();
+            window.addEventListener('resize', check);
+            return () => window.removeEventListener('resize', check);
+          }, []);
+
+          const cardWidth = isMobile ? 240 : 320;
+          const cardOffset = isMobile ? 180 : 280;
+          const carouselHeight = isMobile ? 320 : 420;
+
           return (
             <div ref={carouselRef} className="relative mt-8">
-              {/* Carousel Track */}
-              <div className="flex items-center justify-center relative" style={{ height: 420, perspective: 1200 }}>
+              {/* Mobile: stacked list of cards */}
+              <div className="sm:hidden px-4 grid grid-cols-2 gap-3">
+                {courses.slice(0, 4).map((c, i) => {
+                  const isExpanded = expandedIdx === i;
+                  return (
+                    <motion.div
+                      key={c.title}
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] }}
+                      onClick={() => setExpandedIdx(isExpanded ? null : i)}
+                      className="cursor-pointer"
+                    >
+                      <div
+                        className={`rounded-2xl p-4 border transition-all duration-300 ${isExpanded
+                            ? "bg-white/[0.07] border-white/30 shadow-[0_0_30px_rgba(100,100,255,0.12)]"
+                            : "bg-white/[0.03] border-white/10"
+                          }`}
+                        style={{ backdropFilter: "blur(12px)" }}
+                      >
+                        <div className={`inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3 transition-all ${isExpanded
+                            ? "bg-gradient-to-r from-[#6d5efc] to-[#2ea0ff] text-white"
+                            : "bg-white/10 text-white/70"
+                          }`}>
+                          {c.provider}
+                        </div>
+                        <h3 className="text-xs font-bold mb-1 text-white leading-tight">{c.title}</h3>
+                        <AnimatePresence>
+                          {isExpanded && (
+                            <motion.div
+                              initial={{ opacity: 0, height: 0 }}
+                              animate={{ opacity: 1, height: "auto" }}
+                              exit={{ opacity: 0, height: 0 }}
+                              transition={{ duration: 0.35, ease: "easeOut" }}
+                              className="overflow-hidden"
+                            >
+                              <div className="h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent my-3" />
+                              <p className="text-white/80 text-xs leading-relaxed mb-4">{c.description}</p>
+                              <a
+                                href={c.link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white text-xs font-semibold hover:scale-105 transition-all"
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                View Certificate <ExternalLink size={12} />
+                              </a>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                        {!isExpanded && (
+                          <p className="text-[10px] mt-2 text-white/30">Tap to expand</p>
+                        )}
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </div>
+
+              {/* Desktop/Tablet: Carousel Track */}
+              <div className="hidden sm:flex items-center justify-center relative" style={{ height: carouselHeight, perspective: 1200 }}>
                 {courses.map((c, i) => {
                   const offset = i - activeIdx;
                   const absOffset = Math.abs(offset);
@@ -1384,7 +1635,7 @@ const App = () => {
                       animate={sectionInView ? {
                         opacity: absOffset > 2 ? 0 : isCenter ? 1 : 0.5 + (1 - absOffset * 0.15),
                         y: 0,
-                        x: offset * 280,
+                        x: offset * cardOffset,
                         scale: isExpanded ? 1.15 : isCenter ? 1 : Math.max(0.7, 1 - absOffset * 0.12),
                         rotateY: offset * -4,
                         zIndex: isExpanded ? 100 : isCenter ? 50 : 50 - absOffset * 10,
@@ -1405,30 +1656,28 @@ const App = () => {
                       }}
                       className="absolute cursor-pointer"
                       style={{
-                        width: 320,
+                        width: cardWidth,
                         transformStyle: "preserve-3d",
                         willChange: "transform, opacity, filter",
                       }}
                     >
                       <div
-                        className={`rounded-2xl p-6 border-2 transition-all duration-300 ${
-                          isCenter
+                        className={`rounded-2xl p-5 sm:p-6 border-2 transition-all duration-300 ${isCenter
                             ? "bg-white/[0.07] border-white/30 shadow-[0_0_40px_rgba(100,100,255,0.15)]"
                             : "bg-white/[0.03] border-white/15"
-                        }`}
+                          }`}
                         style={{ backdropFilter: "blur(12px)" }}
                       >
                         {/* Provider Badge */}
-                        <div className={`inline-block px-4 py-1.5 rounded-full text-sm font-semibold mb-4 transition-all ${
-                          isCenter
+                        <div className={`inline-block px-3 sm:px-4 py-1 sm:py-1.5 rounded-full text-xs sm:text-sm font-semibold mb-3 sm:mb-4 transition-all ${isCenter
                             ? "bg-gradient-to-r from-[#6d5efc] to-[#2ea0ff] text-white shadow-[0_0_20px_rgba(100,100,255,0.3)]"
                             : "bg-white/10 text-white/70"
-                        }`}>
+                          }`}>
                           {c.provider}
                         </div>
 
                         {/* Title */}
-                        <h3 className={`text-xl font-bold mb-2 transition-colors ${isCenter ? "text-white" : "text-white/60"}`}>
+                        <h3 className={`text-lg sm:text-xl font-bold mb-2 transition-colors ${isCenter ? "text-white" : "text-white/60"}`}>
                           {c.title}
                         </h3>
 
@@ -1473,33 +1722,32 @@ const App = () => {
                 })}
               </div>
 
-              {/* Navigation Arrows */}
-              <div className="flex justify-center gap-6 mt-8">
+              {/* Navigation Arrows — only on desktop/tablet */}
+              <div className="hidden sm:flex justify-center gap-4 sm:gap-6 mt-6 sm:mt-8">
                 <button
                   onClick={() => { setExpandedIdx(null); goTo(activeIdx - 1); }}
                   disabled={activeIdx === 0}
-                  className="w-12 h-12 rounded-full border border-white/20 bg-white/5 backdrop-blur flex items-center justify-center text-white/60 hover:text-white hover:border-white/40 hover:bg-white/10 transition-all disabled:opacity-20 disabled:pointer-events-none"
+                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-white/20 bg-white/5 backdrop-blur flex items-center justify-center text-white/60 hover:text-white hover:border-white/40 hover:bg-white/10 transition-all disabled:opacity-20 disabled:pointer-events-none"
                 >
                   ←
                 </button>
                 {/* Dot Indicators */}
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5 sm:gap-2">
                   {courses.map((_, i) => (
                     <button
                       key={i}
                       onClick={() => { setExpandedIdx(null); goTo(i); }}
-                      className={`rounded-full transition-all duration-300 ${
-                        i === activeIdx
-                          ? "w-8 h-2.5 bg-gradient-to-r from-blue-500 to-purple-500"
-                          : "w-2.5 h-2.5 bg-white/20 hover:bg-white/40"
-                      }`}
+                      className={`rounded-full transition-all duration-300 ${i === activeIdx
+                          ? "w-6 sm:w-8 h-2 sm:h-2.5 bg-gradient-to-r from-blue-500 to-purple-500"
+                          : "w-2 sm:w-2.5 h-2 sm:h-2.5 bg-white/20 hover:bg-white/40"
+                        }`}
                     />
                   ))}
                 </div>
                 <button
                   onClick={() => { setExpandedIdx(null); goTo(activeIdx + 1); }}
                   disabled={activeIdx === courses.length - 1}
-                  className="w-12 h-12 rounded-full border border-white/20 bg-white/5 backdrop-blur flex items-center justify-center text-white/60 hover:text-white hover:border-white/40 hover:bg-white/10 transition-all disabled:opacity-20 disabled:pointer-events-none"
+                  className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-white/20 bg-white/5 backdrop-blur flex items-center justify-center text-white/60 hover:text-white hover:border-white/40 hover:bg-white/10 transition-all disabled:opacity-20 disabled:pointer-events-none"
                 >
                   →
                 </button>
