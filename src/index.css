@@ -304,3 +304,14 @@ section { position: relative; z-index: 2; }
   background: linear-gradient(135deg, #667eea, #764ba2);
   -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
 }
+
+/* ================= Shimmer text ================= */
+@keyframes shimmer {
+  0% { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+.animate-shimmer {
+  background-size: 200% auto;
+  animation: shimmer 3s linear infinite;
+}
+
