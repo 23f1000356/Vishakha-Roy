@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence, Variants } from "framer-motion";
 import vishakhaImg from "./assets/Vshakha.png";
 import pythonImg from "./assets/Python.png";
 import reactImg from "./assets/React.png";
@@ -20,9 +20,13 @@ import webImg7 from "./assets/image 7.jpg";
 import webImg8 from "./assets/image 8.jpg";
 import webImg9 from "./assets/image 9.jpg";
 import webImg10 from "./assets/image 10.jpg";
+import floodImg from "./assets/Flood.jpg";
+import missinfoImg from "./assets/missinfo.jpg";
+import hospitalImg from "./assets/Hospital.jpg";
+import skillintelImg from "./assets/Skillintel.jpg";
 
 import {
-  Menu, X, Code, Mail, Phone, MapPin, Trophy, Award, Brain,
+  Menu, X, Code, Mail, MapPin, Brain,
   CaseSensitive as University, GraduationCap, School,
   Github, Linkedin, ExternalLink, Shield, Building2,
   Heart, Bug, Briefcase, ShoppingCart, HelpCircle, CloudLightning
@@ -30,6 +34,11 @@ import {
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, SoftShadows } from "@react-three/drei";
 import ProjectDetails from "./components/ProjectDetails";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(ScrollTrigger);
 
 /* ================= Small reveal helper ================= */
 function useInView(threshold = 0.2) {
@@ -47,7 +56,7 @@ function useInView(threshold = 0.2) {
   return [ref, inView] as const;
 }
 
-const Reveal = ({ effect = "up", className = "", children }) => {
+const Reveal = ({ effect = "up", className = "", children }: { effect?: string; className?: string; children: React.ReactNode }) => {
   const [ref, inView] = useInView(0.05);
   const map = {
     up: "reveal-up",
@@ -261,7 +270,7 @@ const courses = [
 ];
 
 const SkillGroup = ({ title, items, slideFrom = "left" }: { title: string; items: any[]; slideFrom?: "left" | "right" }) => {
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0, x: slideFrom === "left" ? -80 : 80 },
     visible: {
       opacity: 1,
@@ -270,14 +279,14 @@ const SkillGroup = ({ title, items, slideFrom = "left" }: { title: string; items
     }
   };
 
-  const itemContainerVariants = {
+  const itemContainerVariants: Variants = {
     hidden: {},
     visible: {
       transition: { staggerChildren: 0.07, delayChildren: 0.5 }
     }
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } }
   };
@@ -331,7 +340,7 @@ const SkillGroup = ({ title, items, slideFrom = "left" }: { title: string; items
   );
 };
 
-const SplitText = ({ text, delay = 0, className = "" }) => {
+const SplitText = ({ text, delay = 0, className = "" }: { text: string; delay?: number; className?: string }) => {
   return (
     <motion.div
       initial="hidden"
@@ -360,12 +369,12 @@ const SplitText = ({ text, delay = 0, className = "" }) => {
 
 const dynamicWordsCount = ["React", "JavaScript", "HTML", "CSS", "Python"];
 
-const SplitHeadline = ({ text, delay = 0, className = "" }) => {
+const SplitHeadline = ({ text, delay = 0, className = "" }: { text: string; delay?: number; className?: string }) => {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    let timeoutId;
-    let intervalId;
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
+    let intervalId: ReturnType<typeof setInterval> | undefined;
     timeoutId = setTimeout(() => {
       intervalId = setInterval(() => {
         setIndex((prev) => (prev + 1) % dynamicWordsCount.length);
@@ -459,7 +468,7 @@ const SplitHeadline = ({ text, delay = 0, className = "" }) => {
   );
 };
 
-const ScrollSplitText = ({ text, className = "" }) => {
+const ScrollSplitText = ({ text, className = "" }: { text: string; className?: string }) => {
   return (
     <motion.div
       initial="hidden"
@@ -742,7 +751,7 @@ const AboutMeSection = () => {
           className="flex flex-col items-center justify-center gap-6"
         >
           <div className="flex flex-wrap justify-center gap-4">
-            <a href="DataScientist.pdf" download className="btn-solid !bg-white/10 hover:!bg-white/20 !border !border-white/20 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all relative overflow-hidden">
+            <a href="Machine LearningR.pdf" download className="btn-solid !bg-white/10 hover:!bg-white/20 !border !border-white/20 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all relative overflow-hidden">
               Download ML CV
             </a>
             <a href="WebDeveloper.pdf" download className="btn-solid !bg-white/10 hover:!bg-white/20 !border !border-white/20 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-all relative overflow-hidden">
@@ -807,20 +816,20 @@ const AboutMeSection = () => {
           >
             <TiltCard className={`flex flex-col h-full min-h-[280px] sm:min-h-[340px] p-5 sm:p-6 lg:p-8 cursor-pointer relative justify-start ${(card as any).highlight ? 'border-yellow-400/30 shadow-[0_0_30px_rgba(250,200,50,0.15)]' : ''}`}>
               {/* Icon */}
-              <div className={`mb-4 sm:mb-6 transform group-hover:scale-[1.15] transition-transform duration-300 ${(card as any).highlight ? 'origin-center flex justify-center' : 'origin-left'}`}>
+              <div className={`mb-4 sm:mb-6 transform group-hover:scale-[1.15] transition-transform duration-300 ${(card as any).highlight ? 'origin-left md:origin-center flex justify-start md:justify-center' : 'origin-left'}`}>
                 <span className={`p-3 sm:p-4 inline-flex items-center justify-center rounded-2xl bg-white/5 border border-white/10 group-hover:bg-white/10 group-hover:border-white/20 transition-all shadow-[0_0_15px_rgba(0,0,0,0.2)] ${(card as any).highlight ? 'bg-yellow-400/10 border-yellow-400/20' : ''}`}>
                   {card.icon}
                 </span>
               </div>
 
               {/* Title & Divider */}
-              <div className={`mb-4 sm:mb-6 ${(card as any).highlight ? 'text-center' : ''}`}>
+              <div className={`mb-4 sm:mb-6 ${(card as any).highlight ? 'text-left md:text-center' : ''}`}>
                 <h3 className={`text-xl sm:text-2xl font-bold group-hover:text-white transition-colors mb-3 sm:mb-4 ${(card as any).highlight ? 'text-yellow-300 text-2xl sm:text-3xl font-extrabold' : 'text-white/90'}`}>{card.title}</h3>
-                <div className={`h-[2px] bg-gradient-to-r rounded-full ${(card as any).highlight ? 'w-[80px] from-yellow-400 to-orange-500 mx-auto' : 'w-[50px] from-blue-500 to-purple-500'}`} />
+                <div className={`h-[2px] bg-gradient-to-r rounded-full ${(card as any).highlight ? 'w-[80px] from-yellow-400 to-orange-500 md:mx-auto' : 'w-[50px] from-blue-500 to-purple-500'}`} />
               </div>
 
               {/* Bullets */}
-              <ul className={`mt-auto transform group-hover:translate-y-[-5px] transition-all duration-300 relative z-10 flex flex-col gap-2 sm:gap-3 ${(card as any).highlight ? 'text-center items-center' : 'text-left'}`}>
+              <ul className={`mt-auto transform group-hover:translate-y-[-5px] transition-all duration-300 relative z-10 flex flex-col gap-2 sm:gap-3 text-left`}>
                 {card.bullets.map((bullet, idx) => (
                   <li key={idx} className={`flex items-start gap-2 sm:gap-3 text-[13px] sm:text-[15px] group-hover:text-white/90 transition-colors ${(card as any).highlight ? 'text-white/80 font-medium' : 'text-white/60'}`}>
                     <span className={`w-[6px] h-[6px] rounded-full mt-1.5 sm:mt-2 shrink-0 group-hover:shadow-[0_0_8px_rgba(100,200,255,0.8)] transition-all ${(card as any).highlight ? 'bg-yellow-400' : 'bg-white/30 group-hover:bg-blue-400'}`} />
@@ -835,6 +844,205 @@ const AboutMeSection = () => {
     </motion.section>
   );
 };
+
+const GSAPProjectsSection = () => {
+  const container = useRef<HTMLDivElement>(null);
+  
+  const projectsData = [
+    { 
+      id: "01", 
+      title: "FLOOD MANAGEMENT DASHBOARD", 
+      githubLink: "https://github.com/23f1000356/Flood-Management-dashboard",
+      liveLink: "https://github.com/23f1000356/Flood-Management-dashboard",
+      quote: "An intelligent, AI-powered platform for real-time flood monitoring.",
+      solution: "An autonomous, AI-driven platform addressing challenges through real-time satellite integration and ML prediction models.",
+      features: [
+        "Real-Time Monitoring Tracking",
+        "Disaster Prediction ML Models",
+        "Intelligent Resource Allocation",
+        "Post-disaster Recovery Analytics"
+      ],
+      mainImg: floodImg 
+    },
+    { 
+      id: "02", 
+      title: "MISSINFO PLATFORM", 
+      githubLink: "https://github.com/23f1000356/Missinformation",
+      liveLink: "https://github.com/23f1000356/Missinformation",
+      quote: "A comprehensive multi-agent AI system for detecting and verifying misinformation.",
+      solution: "Chrome extension frontline paired with a Node/Express backend offering fast in-context interventions and automated ML triage.",
+      features: [
+        "In-browser claim verification",
+        "Automated NLP/ML triage",
+        "Provenance & transparency checks",
+        "Multilingual support"
+      ],
+      mainImg: missinfoImg 
+    },
+    { 
+      id: "03", 
+      title: "HOSPITAL MANAGEMENT", 
+      githubLink: "https://github.com/23f1000356/Hospital",
+      liveLink: "http://localhost:3000/",
+      quote: "A full-stack hospital management system featuring role-based dashboards.",
+      solution: "Streamlines medical operations through strict role-based access, automated celery tasks, and real-time appointment queues.",
+      features: [
+        "Role-based access control (RBAC)",
+        "Real-time availability tracking",
+        "Redis caching & background jobs",
+        "Scheduled Automated Emails"
+      ],
+      mainImg: hospitalImg 
+    },
+    { 
+      id: "04", 
+      title: "SKILLINTEL", 
+      githubLink: "https://github.com/23f1000356/Syntax_Syndicate",
+      liveLink: "https://syntax-syndicate-seven.vercel.app/",
+      quote: "Career intelligence platform for students analyzing skills and role gaps.",
+      solution: "Upload your resume or link GitHub/LinkedIn to instantly generate an Employability Score and custom learning roadmap.",
+      features: [
+        "AI Resume Parser & Integration",
+        "Target Role Skill Gap Analysis",
+        "Interactive AI Career Mentor",
+        "Live Market Job Feeds"
+      ],
+      mainImg: skillintelImg 
+    },
+  ];
+
+  useGSAP(() => {
+    const cards = gsap.utils.toArray<HTMLElement>(".stacked-card");
+    const stackOffset = window.innerWidth < 768 ? 60 : 80;
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".projects-pin-area",
+        start: "top 90px",
+        end: `+=${cards.length * 60}%`,   // ~60% per card — tight, no leftover gap
+        scrub: 1,
+        pin: true,
+      }
+    });
+
+    cards.forEach((card, index) => {
+      if (index === 0) {
+         gsap.set(card, { y: 0, transformOrigin: "top center" });
+         return; 
+      }
+      
+      gsap.set(card, { y: window.innerHeight, scale: 0.85, opacity: 0, transformOrigin: "top center" });
+      
+      tl.to(card, {
+        y: 0,
+        scale: 1,
+        opacity: 1,
+        duration: 1,
+        ease: "power2.inOut",
+      }, `card${index}`);
+
+      // Push all previously active cards UP and shrink them to create depth
+      for (let j = 0; j < index; j++) {
+         tl.to(cards[j], {
+           y: -(index - j) * stackOffset,
+           scale: 1 - ((index - j) * 0.04),
+           opacity: 1 - ((index - j) * 0.18),
+           duration: 1,
+           ease: "power2.inOut"
+         }, `card${index}`);
+      }
+    });
+
+    const hackathonSection = document.getElementById("hackathons");
+    if (hackathonSection) {
+       gsap.fromTo(hackathonSection, 
+         { y: 100 }, 
+         { y: 0, 
+           scrollTrigger: { 
+             trigger: ".projects-footer", 
+             start: "top bottom", 
+             end: "bottom top", 
+             scrub: true 
+           } 
+         }
+       );
+    }
+  }, { scope: container });
+
+
+  return (
+    <section id="projects" ref={container} className="bg-[#0A0A0A] text-white w-full overflow-hidden relative">
+      <div className="max-w-6xl mx-auto px-4 pt-16 md:pt-24 pb-8">
+        <OutlineToFillHeading text="Projects" className="mb-0 md:mb-4" />
+      </div>
+
+      <div className="projects-pin-area w-full h-[100vh] relative flex items-start justify-center pt-2 md:pt-4">
+        <div className="w-[96%] xl:max-w-[1400px] h-[75vh] md:h-[78vh] relative">
+          {projectsData.map((proj, i) => (
+            <div 
+              key={proj.id} 
+              className="stacked-card absolute inset-0 h-[65vh] md:h-[73vh] rounded-[32px] overflow-hidden border border-white/10 bg-[#111]/95 backdrop-blur-2xl shadow-[0_-20px_40px_rgba(0,0,0,0.8)] flex flex-col p-6 md:p-10"
+              style={{ zIndex: i, top: 0 }}
+            >
+              {/* TOP HEADER STRIP - Remains visible during stacking */}
+              <div className="flex justify-between items-center mb-4 md:mb-6 border-b border-white/10 pb-4 md:pb-6">
+                <div className="flex items-center gap-4 md:gap-6">
+                  <span className="text-4xl md:text-5xl font-black text-white/50">{proj.id}</span>
+                  <a href={proj.githubLink} target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition-colors">
+                    <h3 className="text-xl md:text-3xl font-extrabold uppercase tracking-widest leading-none mt-1">{proj.title}</h3>
+                  </a>
+                </div>
+                <div>
+                  <a href={proj.liveLink} target="_blank" rel="noopener noreferrer" className="shrink-0 px-4 py-2 md:px-7 md:py-2.5 rounded-full border border-white text-white text-[9px] md:text-xs font-bold tracking-[0.2em] uppercase hover:bg-white hover:text-black transition-colors duration-300">
+                    <span className="md:hidden">PROJECT</span>
+                    <span className="hidden md:inline">LIVE PROJECT</span>
+                  </a>
+                </div>
+              </div>
+
+              {/* CONTENT AREA (Left: Image, Right: Text) */}
+              <div className="flex flex-col md:flex-row flex-1 gap-8 md:gap-12 overflow-hidden">
+                {/* Left Column (Image) */}
+                <div className="w-full md:w-[60%] h-[180px] md:h-full rounded-[20px] overflow-hidden relative group shadow-[0_0_30px_rgba(0,0,0,0.5)] bg-[#050505] shrink-0 border border-white/5">
+                   <img src={proj.mainImg} alt={proj.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-85 group-hover:opacity-100" />
+                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
+                </div>
+
+                {/* Right Column (Text) */}
+                <div className="w-full md:w-[40%] flex flex-col gap-5 overflow-y-auto hidden-scrollbar pr-2 mb-4 md:mb-0">
+                   <p className="text-sm md:text-base font-medium text-white/90 italic border-l-2 border-white/20 pl-4 py-1">"{proj.quote}"</p>
+                   <div>
+                     <h4 className="text-white/80 text-[10px] md:text-xs tracking-[0.2em] font-bold uppercase mb-2">Solution</h4>
+                     <p className="text-xs md:text-sm text-white/60 leading-relaxed font-light">{proj.solution}</p>
+                   </div>
+                   <div>
+                     <h4 className="text-white/80 text-[10px] md:text-xs tracking-[0.2em] font-bold uppercase mb-2 mt-2">Features</h4>
+                     <ul className="space-y-1.5 md:space-y-2">
+                       {proj.features.map((feat: string, idx: number) => (
+                         <li key={idx} className="flex items-start gap-2 text-xs md:text-sm text-white/70 font-light">
+                           <span className="text-white/40 mt-0.5">•</span>
+                           <span>{feat}</span>
+                         </li>
+                       ))}
+                     </ul>
+                   </div>
+                </div>
+              </div>            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="projects-footer w-full pt-6 pb-8 flex justify-center relative z-10 bg-[#0A0A0A]">
+         <button onClick={() => {
+           window.location.href='/projects';
+         }} className="px-10 py-4 rounded-full border border-white bg-transparent text-white font-bold tracking-[0.2em] text-sm uppercase hover:bg-white hover:text-black transition-colors duration-300">
+           VIEW ALL PROJECTS &#8594;
+         </button>
+      </div>
+    </section>
+  );
+};
+
 
 const App = () => {
   const { scrollY } = useScroll();
@@ -1367,66 +1575,8 @@ const App = () => {
         </div>
       </section>
 
-      {/* PROJECTS */}
-      <section id="projects" className="py-12 sm:py-16 bg-black text-white">
-        <div className="max-w-6xl mx-auto px-4">
-          <OutlineToFillHeading text="Featured Projects" />
-          {/* Mobile: compact 2-column grid */}
-          <div className="md:hidden grid grid-cols-2 gap-3">
-            {projects.slice(0, 6).map((project, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.05, ease: [0.22, 1, 0.36, 1] }}
-                className="project-card-enhanced bg-white/5 backdrop-blur-lg rounded-xl overflow-hidden cursor-pointer"
-                onClick={project.onClick || (() => { })}
-              >
-                <div className="h-24 bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center text-3xl">
-                  {typeof project.icon === "string" ? project.icon : project.icon}
-                </div>
-                <div className="p-3">
-                  <h3 className="text-sm font-bold mb-1 leading-tight">{project.title}</h3>
-                  <div className="flex flex-wrap gap-1">
-                    {project.tech.slice(0, 2).map((tech, techIndex) => (
-                      <span key={techIndex} className="px-2 py-0.5 bg-white/10 rounded-full text-[10px]">
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-          {/* Desktop: full cards */}
-          <div className="hidden md:grid grid-cols-2 lg:grid-cols-3 gap-7">
-            {projects.map((project, index) => (
-              <Reveal key={index} effect="up">
-                <div
-                  className="project-card-enhanced bg-white/5 backdrop-blur-lg rounded-2xl overflow-hidden cursor-pointer"
-                  onClick={project.onClick || (() => { })}
-                >
-                  <div className="h-44 bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center text-6xl">
-                    {typeof project.icon === "string" ? project.icon : project.icon}
-                  </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold mb-3">{project.title}</h3>
-                    <p className="text-white/90 mb-4 leading-relaxed">{project.description}</p>
-                    <div className="flex flex-wrap gap-2">
-                      {project.tech.map((tech, techIndex) => (
-                        <span key={techIndex} className="px-3 py-1 bg-white/10 rounded-full text-sm">
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* PROJECTS (GSAP Stacked Effect) */}
+      <GSAPProjectsSection />
 
       {/* HACKATHONS — Two-row scroll parallax (desktop) / stacked cards (mobile) */}
       <section id="hackathons" className="py-12 sm:py-24 bg-black text-white overflow-hidden" ref={hackRef as any}>
@@ -1844,17 +1994,74 @@ const App = () => {
       </section>
 
       {/* FOOTER */}
-      <footer className="bg-black text-white text-center py-8 border-t border-white/10">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="flex justify-center gap-6 mb-6">
-            <a href="https://www.linkedin.com/in/vishakha-roy-52924b1b6/" target="_blank" rel="noopener noreferrer" className="social"><Linkedin size={26} /></a>
-            <a href="https://github.com/23f1000356" target="_blank" rel="noopener noreferrer" className="social"><Github size={26} /></a>
-            <a href="mailto:122vishakha2092@sjcem.edu.in" className="social"><Mail size={26} /></a>
-            <a href="tel:+919354565648" className="social"><Phone size={26} /></a>
+      <div className="bg-black pb-4 sm:pb-8 px-2 sm:px-6 lg:px-8">
+        <footer className="bg-[#050508] text-white pt-16 pb-8 border border-white/10 rounded-[2.5rem] sm:rounded-[3.5rem] relative overflow-hidden shadow-2xl">
+          <div className="max-w-6xl mx-auto px-4">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-10 md:gap-0 border-b border-white/10 pb-16">
+            
+            {/* LEFT SIDE: Animated Name */}
+            <div className="w-full md:w-1/2">
+              <div className="relative text-left w-full inline-block">
+                <span className="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-wide uppercase invisible block leading-none" aria-hidden="true">
+                  VISHAKHA<br/>ROY
+                </span>
+                
+                <motion.h2
+                  initial={{ y: 50, opacity: 1 }}
+                  whileInView={{ y: [50, 0, 0, 0], opacity: [1, 1, 1, 0] }}
+                  viewport={{ once: true, margin: "0px" }}
+                  transition={{ duration: 2.3, times: [0, 0.35, 0.78, 1], ease: "easeOut" }}
+                  className="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-wide uppercase absolute inset-0 flex flex-col justify-center items-start pointer-events-none leading-none"
+                >
+                  <span style={{ WebkitTextStroke: "2px rgba(255,255,255,0.55)", color: "transparent" }}>VISHAKHA</span>
+                  <span style={{ WebkitTextStroke: "2px rgba(255,255,255,0.55)", color: "transparent" }}>ROY</span>
+                </motion.h2>
+
+                <motion.h2
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: [0, 0, 1] }}
+                  viewport={{ once: true, margin: "0px" }}
+                  transition={{ duration: 2.3, times: [0, 0.78, 1], ease: "easeOut" }}
+                  className="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-wide uppercase absolute inset-0 flex flex-col justify-center items-start text-white leading-none"
+                >
+                  <span>VISHAKHA</span>
+                  <span>ROY</span>
+                  <div className="absolute inset-0 bg-blue-500/10 blur-3xl -z-10" />
+                </motion.h2>
+              </div>
+            </div>
+
+            {/* RIGHT SIDE: Links */}
+            <div className="w-full md:w-1/2 flex flex-col sm:flex-row justify-start md:justify-end gap-10 sm:gap-20">
+              {/* SOCIAL */}
+              <div className="flex flex-col">
+                <h4 className="font-bold text-sm tracking-[0.2em] mb-4 text-white uppercase">SOCIAL</h4>
+                <ul className="space-y-3 text-white/70 text-sm">
+                  <li><a href="https://www.linkedin.com/in/vishakha-roy-52924b1b6/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">LinkedIn</a></li>
+                  <li><a href="https://github.com/23f1000356" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">GitHub</a></li>
+                </ul>
+              </div>
+
+              {/* CONTACT */}
+              <div className="flex flex-col">
+                <h4 className="font-bold text-sm tracking-[0.2em] mb-4 text-white uppercase">CONTACT</h4>
+                <ul className="space-y-3 text-white/70 text-sm">
+                  <li><a href="mailto:royvishakha10@gmail.com" className="hover:text-white transition-colors block break-all">royvishakha10@gmail.com</a></li>
+                  <li><a href="mailto:23f1000356@ds.study.iitm.ac.in" className="hover:text-white transition-colors block break-all">23f1000356@ds.study.iitm.ac.in</a></li>
+                  <li><a href="mailto:122vishakha2092@sjcem.edu.in" className="hover:text-white transition-colors block break-all">122vishakha2092@sjcem.edu.in</a></li>
+                  <li className="pt-2 flex items-center gap-2"><MapPin size={16} className="text-white/70" /> Mumbai</li>
+                </ul>
+              </div>
+            </div>
+
           </div>
-          <p className="text-white/70">&copy; {new Date().getFullYear()} Vishakha Roy. Crafted with 💜 and lots of ☕</p>
+
+          <div className="mt-8 flex flex-col md:flex-row justify-between items-center text-white/50 text-xs text-center md:text-left">
+            <p>&copy; {new Date().getFullYear()} Vishakha Roy. Crafted with 💜 and lots of ☕</p>
+          </div>
         </div>
       </footer>
+      </div>
     </>
   );
 };
